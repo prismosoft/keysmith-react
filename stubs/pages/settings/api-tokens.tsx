@@ -7,6 +7,7 @@ import { type BreadcrumbItem } from "@/types";
 import AppLayout from "@/layouts/app-layout";
 import SettingsLayout from "@/layouts/settings/layout";
 import CreateApiTokenForm from "../../components/create-api-token-form";
+import ManageApiTokens from "../../components/manage-api-tokens";
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
@@ -14,6 +15,15 @@ const breadcrumbs: BreadcrumbItem[] = [
     href: "/settings/api-tokens",
   },
 ];
+
+interface Token {
+  id: number;
+  tokenable_type: string;
+  tokenable_id: number;
+  name: string;
+  abilities: string[];
+  last_used_at: string;
+}
 
 export default function ApiTokens({
   tokens,
@@ -37,6 +47,10 @@ export default function ApiTokens({
           <CreateApiTokenForm
             availablePermissions={availablePermissions}
             defaultPermissions={defaultPermissions}
+          />
+          <ManageApiTokens
+            tokens={tokens}
+            availablePermissions={availablePermissions}
           />
         </div>
       </SettingsLayout>

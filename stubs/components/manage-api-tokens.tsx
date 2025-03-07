@@ -9,7 +9,6 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -141,8 +140,13 @@ export default function ManageApiTokens({
             <div className="mt-4 text-sm">
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 {Object.values(availablePermissions).map((permission) => (
-                  <Label for={permission} className="flex items-center">
+                  <Label
+                    key={permission}
+                    htmlFor={permission}
+                    className="flex items-center"
+                  >
                     <Checkbox
+                      key={permission}
                       id={permission}
                       tabIndex={4}
                       name={permission}
@@ -160,14 +164,12 @@ export default function ManageApiTokens({
               </div>
             </div>
             <DialogFooter>
-              <DialogClose as-child>
-                <Button
-                  variant="secondary"
-                  onClick={() => setIsTokenBeingEdited(false)}
-                >
-                  Close
-                </Button>
-              </DialogClose>
+              <Button
+                variant="secondary"
+                onClick={() => setIsTokenBeingEdited(false)}
+              >
+                Close
+              </Button>
               <form onSubmit={updateApiToken}>
                 <Button type="submit" className="ms-3" disabled={processing}>
                   Save
@@ -191,14 +193,12 @@ export default function ManageApiTokens({
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
-              <DialogClose as-child>
-                <Button
-                  variant="secondary"
-                  onClick={() => setIsTokenBeingDeleted(false)}
-                >
-                  Close
-                </Button>
-              </DialogClose>
+              <Button
+                variant="secondary"
+                onClick={() => setIsTokenBeingDeleted(false)}
+              >
+                Close
+              </Button>
               <form onSubmit={deleteToken}>
                 <Button
                   variant="destructive"

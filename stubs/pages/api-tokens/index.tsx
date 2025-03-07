@@ -3,7 +3,7 @@ import { type BreadcrumbItem } from "@/types";
 import { Head } from "@inertiajs/react";
 import Heading from "@/components/heading";
 import CreateApiTokenForm from "@/components/create-api-token-form";
-
+import ManageApiTokens from "@/components/manage-api-tokens";
 const breadcrumbs: BreadcrumbItem[] = [
   {
     title: "API Tokens",
@@ -38,6 +38,10 @@ export default function ApiTokens({
           <CreateApiTokenForm
             availablePermissions={availablePermissions}
             defaultPermissions={defaultPermissions}
+          />
+          <ManageApiTokens
+            tokens={tokens}
+            availablePermissions={availablePermissions}
           />
         </div>
       </div>

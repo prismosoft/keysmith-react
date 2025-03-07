@@ -10,7 +10,6 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -42,19 +41,6 @@ export default function CreateApiTokenForm({
 
   const [recentlyCopied, setRecentlyCopied] = useState(false);
 
-  const submit: FormEventHandler = (e) => {
-    e.preventDefault();
-    post(route("api-tokens.store"), {
-      preserveScroll: true,
-      onSuccess: () => {
-        console.log("Form submitted successfully");
-        setIsTokenDialogOpen(true);
-        console.log("Dialog state:", isTokenDialogOpen);
-        reset();
-      },
-    });
-  };
-
   const copyToken = () => {
     setRecentlyCopied(true);
     navigator.clipboard.writeText(flash.api_token);
@@ -63,9 +49,15 @@ export default function CreateApiTokenForm({
     }, 2000);
   };
 
-  const closeModal = () => {
-    setIsTokenDialogOpen(false);
-    reset();
+  const submit: FormEventHandler = (e) => {
+    e.preventDefault();
+    post(route("api-tokens.store"), {
+      preserveScroll: true,
+      onSuccess: () => {
+        setIsTokenDialogOpen(true);
+        reset();
+      },
+    });
   };
 
   return (
@@ -84,7 +76,6 @@ export default function CreateApiTokenForm({
               <Label htmlFor="name">Name</Label>
 
               <Input
-                id="name"
                 type="text"
                 name="name"
                 required
@@ -111,9 +102,9 @@ export default function CreateApiTokenForm({
                           <Checkbox
                             id={permission}
                             tabIndex={4}
-                            name={permission}
                             checked={data.permissions.includes(permission)}
                             onCheckedChange={(checked) => {
+                              console.log("Checkbox clicked:", permission);
                               const updatedPermissions = checked
                                 ? [...data.permissions, permission]
                                 : data.permissions.filter(
@@ -173,11 +164,12 @@ export default function CreateApiTokenForm({
               </div>
             )}
             <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="secondary" onClick={closeModal}>
-                  Close
-                </Button>
-              </DialogClose>
+              <Button
+                variant="secondary"
+                onClick={() => setIsTokenDialogOpen(false)}
+              >
+                Close
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
