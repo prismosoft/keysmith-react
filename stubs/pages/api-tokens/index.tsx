@@ -11,21 +11,30 @@ const breadcrumbs: BreadcrumbItem[] = [
   },
 ];
 
+interface Token {
+  id: number;
+  tokenable_type: string;
+  tokenable_id: number;
+  name: string;
+  abilities: string[];
+  last_used_at: string;
+}
+
 export default function ApiTokens({
   tokens,
   availablePermissions,
   defaultPermissions,
 }: {
-  tokens: any[];
-  availablePermissions: any[];
-  defaultPermissions: any[];
+  tokens: Token[];
+  availablePermissions: string[];
+  defaultPermissions: string[];
 }) {
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="API Tokens" />
-      <div class="px-4 py-6 space-y-6">
+      <div className="px-4 py-6 space-y-6">
         <Heading title="API Tokens" description="Manage your API tokens" />
-        <div class="flex flex-col gap-6 w-full md:w-3/4">
+        <div className="flex flex-col gap-6 w-full md:w-3/4">
           <CreateApiTokenForm
             availablePermissions={availablePermissions}
             defaultPermissions={defaultPermissions}

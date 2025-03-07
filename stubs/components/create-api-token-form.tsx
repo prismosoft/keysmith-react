@@ -1,3 +1,5 @@
+import InputError from "@/components/input-error";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -5,31 +7,33 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useForm } from "@inertiajs/react";
 import { FormEventHandler } from "react";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { InputError } from "@/components/input-error";
-import { Checkbox } from "@/components/ui/checkbox";
 
-export default function CreateApiTokenForm(
-  availablePermissions: string[],
-  defaultPermissions: string[]
-) {
-  const form = useForm({
+export default function CreateApiTokenForm({
+  availablePermissions,
+  defaultPermissions,
+}: {
+  availablePermissions: string[];
+  defaultPermissions: string[];
+}) {
+  const { data, errors, post, reset, setData, processing } = useForm({
     name: "",
-    permissions: defaultPermissions,
+    permissions: defaultPermissions || [],
   });
 
   const submit: FormEventHandler = (e) => {
     e.preventDefault();
-    form.post(route("api-tokens.store"), {
-      onSuccess: () => form.reset(),
+    post(route("api-tokens.store"), {
+      onSuccess: () => reset(),
     });
   };
 
   return (
-    <Card class="w-full">
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Create API Token</CardTitle>
       </CardHeader>
@@ -40,34 +44,59 @@ export default function CreateApiTokenForm(
         </CardDescription>
         <form onSubmit={submit} className="mt-6 space-y-6">
           <div>
-            <Label for="name" value="Name" />
+            <Label htmlFor="name">Name</Label>
             <Input
               type="text"
               name="name"
               required
               autoFocus
+              tabIndex={1}
               placeholder="Token Name"
-              value={form.name}
-              onChange={(e) => (form.name = e.target.value)}
+              value={data.name}
+              onChange={(e) => (data.name = e.target.value)}
             />
-            <InputError message="form.errors.name" />
+            <InputError message={errors.name} />
           </div>
+
           <div>
-            {availablePermissions.map((permission) => (
-              <div key={permission}>
-                <Checkbox
-                  id={permission}
-                  checked={form.permissions.includes(permission)}
-                  onCheckedChange={(checked) => {
-                    form.permissions = checked
-                      ? [...form.permissions, permission]
-                      : form.permissions.filter((p) => p !== permission);
-                  }}
-                />
-                <Label for={permission}>{permission}</Label>
-              </div>
-            ))}
+            {availablePermissions &&
+              Object.keys(availablePermissions).length > 0 && (
+                <div className="col-span-6">
+                  <div className="mt-2 grid grid-cols-1 gap-4 md:grid-cols-2">
+                    {Object.values(availablePermissions).map((permission) => (
+                      <Label
+                        key={permission}
+                        htmlFor={permission}
+                        className="flex items-center space-x-3"
+                      >
+                        <Checkbox
+                          checked={data.permissions.includes(permission)}
+                          tabIndex={4}
+                          onCheckedChange={(checked) => {
+                            console.log("Checkbox clicked:", permission);
+                            const updatedPermissions = checked
+                              ? [...data.permissions, permission]
+                              : data.permissions.filter(
+                                  (p) => p !== permission
+                                );
+                            setData("permissions", updatedPermissions);
+                          }}
+                        />
+                        <span>{permission}</span>
+                      </Label>
+                    ))}
+                  </div>
+                </div>
+              )}
           </div>
+          <Button
+            type="submit"
+            className="mt-4"
+            tabIndex={5}
+            disabled={processing}
+          >
+            Create
+          </Button>
         </form>
       </CardContent>
     </Card>

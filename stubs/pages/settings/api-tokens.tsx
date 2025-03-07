@@ -20,9 +20,9 @@ export default function ApiTokens({
   availablePermissions,
   defaultPermissions,
 }: {
-  tokens: any[];
-  availablePermissions: any[];
-  defaultPermissions: any[];
+  tokens: [];
+  availablePermissions: string[];
+  defaultPermissions: string[];
 }) {
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
