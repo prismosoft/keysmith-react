@@ -1,12 +1,12 @@
 import { Head } from "@inertiajs/react";
 
+import AppearanceTabs from "@/components/appearance-tabs";
 import HeadingSmall from "@/components/heading-small";
 import { type BreadcrumbItem } from "@/types";
 
 import AppLayout from "@/layouts/app-layout";
 import SettingsLayout from "@/layouts/settings/layout";
 import CreateApiTokenForm from "../../components/create-api-token-form";
-import ManageApiTokens from "../../components/manage-api-tokens";
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
@@ -15,7 +15,15 @@ const breadcrumbs: BreadcrumbItem[] = [
   },
 ];
 
-export default function APITokens() {
+export default function ApiTokens({
+  tokens,
+  availablePermissions,
+  defaultPermissions,
+}: {
+  tokens: any[];
+  availablePermissions: any[];
+  defaultPermissions: any[];
+}) {
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="API Tokens" />
@@ -24,12 +32,12 @@ export default function APITokens() {
         <div className="space-y-6">
           <HeadingSmall
             title="API Tokens"
-            description="Manage your API tokens."
+            description="Manage your API tokens"
           />
-          <div className="space-y-6">
-            <CreateApiTokenForm />
-            <ManageApiTokens />
-          </div>
+          <CreateApiTokenForm
+            availablePermissions={availablePermissions}
+            defaultPermissions={defaultPermissions}
+          />
         </div>
       </SettingsLayout>
     </AppLayout>
