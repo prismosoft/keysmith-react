@@ -82,7 +82,9 @@ export default function CreateApiTokenForm({
           <form onSubmit={submit} className="mt-6 space-y-6">
             <div>
               <Label htmlFor="name">Name</Label>
+
               <Input
+                id="name"
                 type="text"
                 name="name"
                 required
@@ -107,6 +109,7 @@ export default function CreateApiTokenForm({
                           className="flex items-center space-x-3"
                         >
                           <Checkbox
+                            id={permission}
                             tabIndex={4}
                             name={permission}
                             checked={data.permissions.includes(permission)}
