@@ -1,7 +1,8 @@
 import AppLayout from "@/layouts/app-layout";
 import { type BreadcrumbItem } from "@/types";
 import { Head } from "@inertiajs/react";
-import Heading from "@/components/ui/heading";
+import Heading from "@/components/heading";
+import CreateApiTokenForm from "@/components/create-api-token-form";
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
