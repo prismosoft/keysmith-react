@@ -60,8 +60,6 @@ export default function ManageApiTokens({
   const updateApiToken = () => {
     if (!tokenBeingEdited) return;
     put(route("api-tokens.update", { token: tokenBeingEdited }), {
-      preserveScroll: true,
-      preserveState: true,
       onSuccess: () => (
         setTokenBeingEdited(null), setIsTokenBeingEdited(false)
       ),
