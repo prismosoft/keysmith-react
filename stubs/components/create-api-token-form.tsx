@@ -7,6 +7,10 @@ import {
 } from "@/components/ui/card";
 import { useForm } from "@inertiajs/react";
 import { FormEventHandler } from "react";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { InputError } from "@/components/ui/input-error";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function CreateApiTokenForm(
   availablePermissions: string[],
@@ -47,6 +51,22 @@ export default function CreateApiTokenForm(
               onChange={(e) => (form.name = e.target.value)}
             />
             <InputError message="form.errors.name" />
+          </div>
+          <div>
+            {availablePermissions.map((permission) => (
+              <div key={permission}>
+                <Checkbox
+                  id={permission}
+                  checked={form.permissions.includes(permission)}
+                  onCheckedChange={(checked) => {
+                    form.permissions = checked
+                      ? [...form.permissions, permission]
+                      : form.permissions.filter((p) => p !== permission);
+                  }}
+                />
+                <Label for={permission}>{permission}</Label>
+              </div>
+            ))}
           </div>
         </form>
       </CardContent>
