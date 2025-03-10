@@ -9,9 +9,11 @@
 
 # Keysmith React - Laravel 12 React Starterkit API Token Management
 
-Keysmith React is a Laravel 12 React Starterkit package that provides React.js components for managing API keys and tokens in your application. It offers a clean, user-friendly interface for creating, viewing, and revoking API keys with customizable permissions based on the implementation from Laravel Breeze.
+**Keysmith React** is a Laravel 12 React Starterkit package that provides React.js components for managing API keys and tokens in your application. It offers a clean, user-friendly interface for creating, viewing, and revoking API keys with customizable permissions based on Laravel Breeze.
 
-## Features
+---
+
+## ✨ Features
 
 - 🔑 Easy API token generation and management
 - 🔒 Built on Laravel Sanctum's secure token authentication
@@ -20,46 +22,54 @@ Keysmith React is a Laravel 12 React Starterkit package that provides React.js c
 - ⚙️ Flexible installation options (page or settings templates)
 - 🛠️ Customizable permissions system
 
-## Requirements
+---
 
-- PHP 8.0 or higher
-- Laravel 12.x
-- React 19.x
+## 🛠 Requirements
+
+Before installing **Keysmith React**, ensure your environment meets the following requirements:
+
+- PHP **8.0+**
+- Laravel **12.x**
+- React **19.x**
 - Laravel Sanctum
 
-## Installation
+---
 
-You can install the package via composer:
+## 🚀 Installation
+
+Install the package via Composer:
 
 ```bash
 composer require blaspsoft/keysmith-react
 ```
 
-Choose your preferred installation template:
+### Choose Your Installation Template
 
-### Page Template
+You can install one (or both) of the available templates:
 
-Install this option to add a dedicated API tokens page at `pages/api-tokens/index.tsx`. This provides a standalone interface for managing your API tokens.
+#### **Page Template**
 
-### Settings Template
-
-Choose this option to integrate API token management within your Laravel Vue Starterkit settings at `pages/settings/api-tokens.tsx`. This keeps token management alongside your other application settings.
-
-Run one (or both) of the following commands based on your choice:
+Adds a dedicated API tokens page at `pages/api-tokens/index.tsx`.
 
 ```bash
 php artisan keysmith:install page
 ```
 
-or
+#### **Settings Template**
+
+Integrates API token management within the **Laravel Vue Starterkit** settings at `pages/settings/api-tokens.tsx`.
 
 ```bash
 php artisan keysmith:install settings
 ```
 
-### Configure Inertia Middleware
+---
 
-Add the following to your `HandleInertiaRequests.php` middleware's `share` method to handle API token flash messages:
+## 🔧 Configuration
+
+### 1️⃣ Configure Inertia Middleware
+
+Add the following to your `HandleInertiaRequests.php` middleware's `share` method to enable API token flash messages:
 
 ```php
 'flash' => [
@@ -67,32 +77,34 @@ Add the following to your `HandleInertiaRequests.php` middleware's `share` metho
 ],
 ```
 
+**Full example:**
+
 ```php
 public function share(Request $request): array
-    {
-        [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
+{
+    [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
-        return [
-            ...parent::share($request),
-            'name' => config('app.name'),
-            'quote' => ['message' => trim($message), 'author' => trim($author)],
-            'auth' => [
-                'user' => $request->user(),
-            ],
-            'flash' => [
-                'api_token' => fn () => session()->get('api_token'),
-            ],
-        ];
-    }
+    return [
+        ...parent::share($request),
+        'name' => config('app.name'),
+        'quote' => ['message' => trim($message), 'author' => trim($author)],
+        'auth' => [
+            'user' => $request->user(),
+        ],
+        'flash' => [
+            'api_token' => fn () => session()->get('api_token'),
+        ],
+    ];
+}
 ```
 
-This configuration is required to display newly created API tokens to users.
+This ensures newly created API tokens are displayed to users.
 
-### Add navlinks to starterkit templates
+### 2️⃣ Add Navigation Links
 
-Dependent of which template you decide to use 'page" or "settings" (or both). You may want to add links to the app sidebar and settings navigations.
+#### **For the Page Template**
 
-For the page update `js/components/app-sidebar.tsx`
+Modify `js/components/app-sidebar.tsx`:
 
 ```javascript
 const mainNavItems: NavItem[] = [
@@ -109,7 +121,9 @@ const mainNavItems: NavItem[] = [
 ];
 ```
 
-For the settings update `js/layouts/settings/layout.tsx`
+#### **For the Settings Template**
+
+Modify `js/layouts/settings/layout.tsx`:
 
 ```javascript
 const sidebarNavItems: NavItem[] = [
@@ -132,59 +146,63 @@ const sidebarNavItems: NavItem[] = [
 ];
 ```
 
-### Publish config [optional]
+### 3️⃣ (Optional) Publish Configuration File
+
+To customize settings, publish the config file:
 
 ```bash
 php artisan vendor:publish --tag=keysmith-config --force
 ```
 
-This command will publish a configuration file at `config/keysmith.php`, where you can customize keysmith settings.
+This creates `config/keysmith.php`, where you can modify key permissions.
 
-## Dependencies
+---
 
-This package requires Laravel Sanctum for API token authentication. Before using Keysmith Vue, make sure to:
+## 🔑 Dependencies
 
-1. Install Laravel Sanctum:
+Keysmith React requires **Laravel Sanctum** for API token authentication.
 
-```bash
-composer require laravel/sanctum
-```
+1. Install **Laravel Sanctum**:
 
-2. Publish and run Sanctum's migrations:
+   ```bash
+   composer require laravel/sanctum
+   ```
 
-```bash
-php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider" --tag="sanctum-migrations"
-php artisan migrate
-```
+2. Publish and run Sanctum’s migrations:
 
-3. Add the HasApiTokens trait to your User model:
+   ```bash
+   php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider" --tag="sanctum-migrations"
+   php artisan migrate
+   ```
 
-```php
-use Laravel\Sanctum\HasApiTokens;
+3. Add the `HasApiTokens` trait to your `User` model:
 
-class User extends Authenticatable
-{
-    use HasApiTokens;
-    // ... existing code ...
-}
-```
+   ```php
+   use Laravel\Sanctum\HasApiTokens;
 
-## Components
+   class User extends Authenticatable
+   {
+       use HasApiTokens;
+       // ... existing code ...
+   }
+   ```
 
-Keysmith React provides two components that are installed in your `/components` directory:
+---
 
-- `create-api-token-form.tsx`: Form component for generating new API tokens
-- `manage-api-tokens.tsx`: Component for viewing and managing existing tokens
+## 📦 Components
 
-These components are utilized in both the page and settings templates.
+Keysmith React provides two main components located in `/components`:
 
-## Routes
+- `create-api-token-form.tsx` → Form for generating new API tokens
+- `manage-api-tokens.tsx` → Component for viewing and managing existing tokens
 
-Keysmith Vue provides two sets of routes depending on your installation choice:
+These components are used in both **Page** and **Settings** templates.
 
-### Page Template Routes
+---
 
-If you installed using the page template (`keysmith:install page`), these routes are available:
+## 🌐 Routes
+
+### **Page Template Routes**
 
 ```php
 Route::get('/api-tokens', [TokenController::class, 'index'])->name('api-tokens.index');
@@ -193,9 +211,7 @@ Route::put('/api-tokens/{token}', [TokenController::class, 'update'])->name('api
 Route::delete('/api-tokens/{token}', [TokenController::class, 'destroy'])->name('api-tokens.destroy');
 ```
 
-### Settings Template Routes
-
-If you installed using the settings template (`keysmith:install settings`), these routes are available:
+### **Settings Template Routes**
 
 ```php
 Route::get('/settings/api-tokens', [TokenController::class, 'index'])->name('settings.api-tokens.index');
@@ -204,29 +220,23 @@ Route::put('/settings/api-tokens/{token}', [TokenController::class, 'update'])->
 Route::delete('/settings/api-tokens/{token}', [TokenController::class, 'destroy'])->name('settings.api-tokens.destroy');
 ```
 
-All routes are protected by authentication middleware and handle the following operations:
+---
 
-- `GET`: Retrieve all tokens for the authenticated user
-- `POST`: Create a new API token
-- `PUT`: Update token permissions
-- `DELETE`: Revoke an existing token
+## 🧪 Testing
 
-## Testing
+Keysmith React includes tests in `tests/Feature/ApiToken/`:
 
-Keysmith React includes test files that are placed in your project's `tests/Feature/ApiToken` directory:
-
-- `PageTokenTest.php`: Tests for the page template implementation
-- `SettingsTokenTest.php`: Tests for the settings template implementation
-
-You can run the tests using:
+Run the tests with:
 
 ```bash
 php artisan test
 ```
 
-### Customizing Permissions
+---
 
-You can customize the available token permissions by modifying the `config/keysmith.php` file:
+## 🎛 Customizing Permissions
+
+Modify the available API token permissions in `config/keysmith.php`:
 
 ```php
 return [
@@ -240,14 +250,20 @@ return [
 ];
 ```
 
-### Security
+---
 
-If you discover any security related issues, please email mike.deeming@blaspsoft.com instead of using the issue tracker.
+## 🔒 Security
 
-## Credits
+If you discover any **security-related** issues, please email **mike.deeming@blaspsoft.com** instead of using the issue tracker.
+
+---
+
+## 📜 Credits
 
 - [Michael Deeming](https://github.com/deemonic)
 
-## License
+---
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+## 📄 License
+
+This package is licensed under **MIT**. See [LICENSE.md](LICENSE.md) for details.
