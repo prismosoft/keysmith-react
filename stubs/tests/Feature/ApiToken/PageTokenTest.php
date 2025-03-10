@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\ApiToken;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -20,7 +20,7 @@ class PageTokenTest extends TestCase
 
         $response->assertOk()
              ->assertInertia(fn (Assert $page) =>
-                 $page->component('api-tokens/Index')
+                 $page->component('api-tokens/index')
                       ->has('auth.user')
              );
     }

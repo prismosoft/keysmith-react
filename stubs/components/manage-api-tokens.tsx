@@ -57,7 +57,8 @@ export default function ManageApiTokens({
     setIsTokenBeingDeleted(true);
   };
 
-  const updateApiToken = () => {
+  const updateApiToken = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (!tokenBeingEdited) return;
     put(route("api-tokens.update", { token: tokenBeingEdited }), {
       onSuccess: () => (
@@ -72,7 +73,8 @@ export default function ManageApiTokens({
     data.permissions = token.abilities;
   };
 
-  const deleteToken = () => {
+  const deleteToken = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (!tokenBeingDeleted) return;
     deleteApiTokenForm.delete(
       route("api-tokens.destroy", { token: tokenBeingDeleted }),
@@ -100,9 +102,9 @@ export default function ManageApiTokens({
             </CardDescription>
             <div className="mt-6 space-y-6">
               {Object.entries(tokens).map(([key, token]) => (
-                <div key={key} className="flex items-center justify-between">
+                <div key={key} className="flex justify-between items-center">
                   <div className="break-all">{token.name}</div>
-                  <div className="ms-2 flex items-center gap-4">
+                  <div className="flex gap-4 items-center ms-2">
                     <div className="text-sm text-gray-400">
                       Last used |{" "}
                       {token.last_used_at
@@ -156,7 +158,7 @@ export default function ManageApiTokens({
                         setData("permissions", updatedPermissions);
                       }}
                     />
-                    <span className="ms-2 text-sm">{permission}</span>
+                    <span className="text-sm ms-2">{permission}</span>
                   </Label>
                 ))}
               </div>
