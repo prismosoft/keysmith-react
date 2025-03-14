@@ -202,22 +202,14 @@ These components are used in both **Page** and **Settings** templates.
 
 ## 🌐 Routes
 
-### **Page Template Routes**
+Keysmith uses the routes defined below:
 
 ```php
+Route::get('/settings/api-tokens', [TokenController::class, 'index'])->name('settings.api-tokens.index');
 Route::get('/api-tokens', [TokenController::class, 'index'])->name('api-tokens.index');
 Route::post('/api-tokens', [TokenController::class, 'store'])->name('api-tokens.store');
 Route::put('/api-tokens/{token}', [TokenController::class, 'update'])->name('api-tokens.update');
 Route::delete('/api-tokens/{token}', [TokenController::class, 'destroy'])->name('api-tokens.destroy');
-```
-
-### **Settings Template Routes**
-
-```php
-Route::get('/settings/api-tokens', [TokenController::class, 'index'])->name('settings.api-tokens.index');
-Route::post('/settings/api-tokens', [TokenController::class, 'store'])->name('settings.api-tokens.store');
-Route::put('/settings/api-tokens/{token}', [TokenController::class, 'update'])->name('settings.api-tokens.update');
-Route::delete('/settings/api-tokens/{token}', [TokenController::class, 'destroy'])->name('settings.api-tokens.destroy');
 ```
 
 ---
