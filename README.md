@@ -110,12 +110,12 @@ Modify `js/components/app-sidebar.tsx`:
 const mainNavItems: NavItem[] = [
   {
     title: "Dashboard",
-    url: "/dashboard",
+    href: "/dashboard",
     icon: LayoutGrid,
   },
   {
     title: "API Tokens",
-    url: "/api-tokens",
+    href: "/api-tokens",
     icon: KeyRound,
   },
 ];
@@ -129,19 +129,19 @@ Modify `js/layouts/settings/layout.tsx`:
 const sidebarNavItems: NavItem[] = [
   {
     title: "Profile",
-    url: "/settings/profile",
+    href: "/settings/profile",
   },
   {
     title: "Password",
-    url: "/settings/password",
+    href: "/settings/password",
   },
   {
     title: "Appearance",
-    url: "/settings/appearance",
+    href: "/settings/appearance",
   },
   {
     title: "API Tokens",
-    url: "/settings/api-tokens",
+    href: "/settings/api-tokens",
   },
 ];
 ```
