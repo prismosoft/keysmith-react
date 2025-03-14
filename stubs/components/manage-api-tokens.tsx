@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { useForm } from "@inertiajs/react";
-import { useState } from "react";
+import { useState, FormEventHandler } from "react";
 
 interface Token {
   id: number;
@@ -57,7 +57,7 @@ export default function ManageApiTokens({
     setIsTokenBeingDeleted(true);
   };
 
-  const updateApiToken = (e: React.FormEvent<HTMLFormElement>) => {
+  const updateApiToken: FormEventHandler = (e) => {
     e.preventDefault();
     if (!tokenBeingEdited) return;
     put(route("api-tokens.update", { token: tokenBeingEdited }), {
@@ -73,7 +73,7 @@ export default function ManageApiTokens({
     data.permissions = token.abilities;
   };
 
-  const deleteToken = (e: React.FormEvent<HTMLFormElement>) => {
+  const deleteToken: FormEventHandler = (e) => {
     e.preventDefault();
     if (!tokenBeingDeleted) return;
     deleteApiTokenForm.delete(
