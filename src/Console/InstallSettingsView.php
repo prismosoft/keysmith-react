@@ -13,10 +13,6 @@ trait InstallSettingsView
             return 1;
         }
 
-        // Controller
-        (new Filesystem)->ensureDirectoryExists(app_path('Http/Controllers/Settings'));
-        (new Filesystem)->copy(__DIR__.'/../../stubs/app/Http/Controllers/Settings/TokenController.php', app_path('Http/Controllers/Settings/TokenController.php'));
-
         // Views
         (new Filesystem)->ensureDirectoryExists(resource_path('js/pages/settings'));
         (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/pages/settings', resource_path('js/pages/settings'));

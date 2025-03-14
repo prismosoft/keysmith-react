@@ -52,6 +52,7 @@ export default function CreateApiTokenForm({
   const submit: FormEventHandler = (e) => {
     e.preventDefault();
     post(route("api-tokens.store"), {
+      preserveScroll: true,
       onSuccess: () => {
         setIsTokenDialogOpen(true);
         reset();

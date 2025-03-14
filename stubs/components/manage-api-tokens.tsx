@@ -141,13 +141,13 @@ export default function ManageApiTokens({
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 {Object.values(availablePermissions).map((permission) => (
                   <Label
-                    key={permission}
-                    htmlFor={permission}
+                    key={`manage-api-token-${permission}`}
+                    htmlFor={`manage-api-token-${permission}`}
                     className="flex items-center"
                   >
                     <Checkbox
-                      key={permission}
-                      id={permission}
+                      key={`manage-api-token-${permission}`}
+                      id={`manage-api-token-${permission}`}
                       tabIndex={4}
                       name={permission}
                       checked={data.permissions.includes(permission)}

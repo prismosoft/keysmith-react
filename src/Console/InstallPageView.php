@@ -13,10 +13,6 @@ trait InstallPageView
             return 1;
         }
 
-        // Controller
-        (new Filesystem)->ensureDirectoryExists(app_path('Http/Controllers/APITokens'));
-        (new Filesystem)->copy(__DIR__.'/../../stubs/app/Http/Controllers/APITokens/TokenController.php', app_path('Http/Controllers/APITokens/TokenController.php'));
-
         // Views
         (new Filesystem)->ensureDirectoryExists(resource_path('js/pages/api-tokens'));
         (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/pages/api-tokens', resource_path('js/pages/api-tokens'));
