@@ -13,6 +13,12 @@
 
 ---
 
+## 🎥 Keysmith React Video Tutorial
+
+[![Watch the Tutorial](https://img.youtube.com/vi/cUyYTp_eapI/maxresdefault.jpg)](https://www.youtube.com/watch?v=cUyYTp_eapI)
+
+**▶️ Click the image above to watch the tutorial on YouTube!**
+
 ## ✨ Features
 
 - 🔑 Easy API token generation and management
