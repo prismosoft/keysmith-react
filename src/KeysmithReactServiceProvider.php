@@ -13,21 +13,10 @@ class KeysmithReactServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if(file_exists(app_path('Http/Controllers/APITokens/TokenController.php'))) {
-            // Register routes based on which controller implementation exists in the app
-            Route::middleware(['web', 'auth'])
-                ->group(function () {
-                    require __DIR__.'/../routes/web.php';
-                });
-        }
-
-        if(file_exists(app_path('Http/Controllers/Settings/TokenController.php'))) {    
-            // Register routes based on which controller implementation exists in the app
-            Route::middleware(['web', 'auth'])
-                ->group(function () {
-                    require __DIR__.'/../routes/settings.php';
-                });
-        }
+        Route::middleware(['web', 'auth'])
+            ->group(function () {
+                require __DIR__.'/../routes/web.php';
+            });
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -50,7 +39,6 @@ class KeysmithReactServiceProvider extends ServiceProvider
         // Dynamically bind the correct controller based on its presence
         $controllers = [
             'App\Http\Controllers\APITokens\TokenController' => app_path('Http/Controllers/APITokens/TokenController.php'),
-            'App\Http\Controllers\Settings\TokenController' => app_path('Http/Controllers/Settings/TokenController.php'),
         ];
 
         foreach ($controllers as $class => $path) {

@@ -16,7 +16,11 @@ class TokenController extends Controller
      */
     public function index(Request $request)
     {
-        return Inertia::render('api-tokens/index', [
+        $page = $request->routeIs('settings.api-tokens.index')
+                ? 'settings/api-tokens'
+                : 'api-tokens/index';
+
+        return Inertia::render($page, [
             'tokens' => $request->user()->tokens,
             'availablePermissions' => config('keysmith.available_permissions'),
             'defaultPermissions' => config('keysmith.default_permissions'),
