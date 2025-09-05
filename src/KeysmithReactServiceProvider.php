@@ -18,13 +18,27 @@ class KeysmithReactServiceProvider extends ServiceProvider
                 require __DIR__.'/../routes/web.php';
             });
 
-        if ($this->app->runningInConsole()) {
+          if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('keysmith.php'),
             ], 'keysmith-config');
 
-            (new Filesystem)->ensureDirectoryExists(app_path('Http/Controllers/APITokens'));
-            (new Filesystem)->copy(__DIR__.'/../stubs/app/Http/Controllers/APITokens/TokenController.php', app_path('Http/Controllers/APITokens/TokenController.php'));
+            $fs = new Filesystem();
+            $source = __DIR__.'/../stubs/app/Http/Controllers/APITokens/TokenController.php';
+            $target = app_path('Http/Controllers/APITokens/TokenController.php');
+
+            // Publish mapping so users can explicitly re-publish if needed
+            $this->publishes([
+                $source => $target,
+            ], 'keysmith-controllers');
+
+            // One-time seed for fresh installs only (do NOT overwrite user code)
+            if (! $fs->exists($target)) {
+                $fs->ensureDirectoryExists(dirname($target));
+                $fs->copy($source, $target);
+            }
+        }
+
         }
 
         $this->commands([
