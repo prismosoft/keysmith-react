@@ -39,8 +39,6 @@ class KeysmithReactServiceProvider extends ServiceProvider
             }
         }
 
-        }
-
         $this->commands([
             Console\InstallCommand::class,
         ]);
